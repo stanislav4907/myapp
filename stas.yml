@@ -1,0 +1,31 @@
+- hosts: hw
+  tasks:
+  - name: Install Apache
+    apt:
+      name: apache2
+      update_cache: yes
+      state: present
+
+
+  - name: Start Apache
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+
+  - name: Install unzip
+    apt:
+      name: unzip
+      state: latest
+
+  - name: Download and extract Template
+    unarchive:
+      src: https://www.free-css.com/assets/files/free-css-templates/download/page284/built-better.zip
+      dest: /tmp/
+      remote_src: yes
+
+  - name: Copy a "sudoers" file on the remote machine for editing
+    copy:
+      src: /tmp/html/
+      dest: /var/www/html/
+      remote_src: yes
